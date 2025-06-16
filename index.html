@@ -81,12 +81,13 @@
         <!-- Contact Form Section -->
         <div class="container mt-5 mb-5">
         <h2 class="text-center mb-4">Contact Us</h2>
+        <form id="contactForm">
         <div>
             <div class="row g-3 mb-3">
             <!-- Name Field -->
             <div class="col-md-6">
                 <div class="form-floating">
-                <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+                <input type="text" class="form-control" id="floatingName" placeholder="Your Name" required>
                 <label for="floatingName">Name</label>
                 </div>
             </div>
@@ -94,7 +95,7 @@
             <!-- Email Field -->
             <div class="col-md-6">
                 <div class="form-floating">
-                <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
+                <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
                 <label for="floatingEmail">Email</label>
                 </div>
             </div>
@@ -104,7 +105,7 @@
             <!-- Message Field -->
             <div class="col-md-12">
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Your message" id="floatingMessage"></textarea>
+                <textarea class="form-control" placeholder="Your message" id="floatingMessage" required></textarea>
                 <label for="floatingMessage">Message</label>
                 </div>
             </div>
@@ -114,7 +115,51 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         </div>
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Submission Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Name:</strong> <span id="modalName"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Message:</strong></p>
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+        document.getElementById('contactForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('floatingName').value;
+            const email = document.getElementById('floatingEmail').value;
+            const message = document.getElementById('floatingMessage').value;
+
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalEmail').textContent = email;
+            document.getElementById('modalMessage').textContent = message;
+
+            const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
+            infoModal.show();
+
+            const form = document.getElementById('contactForm');
+            form.reset();
+
+            form.querySelectorAll('.form-control').forEach(input => {
+                input.dispatchEvent(new Event('input'));
+            });
+                });
+        </script>
     </div>
 </body>
 
